@@ -131,6 +131,8 @@ function recalculate!(operator :: DistortionOperator{SPB}, recursive::Bool=true,
         operator.matrix_rep[alpha, beta] = getMatrixElementLDotnSquared(basis(operator), basis(operator)[alpha], basis(operator)[beta], operator.n)
     end
     end
+    # balance operator by subtracting (sum(energies)/num_of_states)*identity_operator
+    operator.matrix_rep -= (sum(eigvals(operator.matrix_rep))/length(basis(operator)))*I
 end
 
 # set a parameter (returns (found parameter?, changed matrix?))
